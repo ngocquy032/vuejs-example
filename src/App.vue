@@ -9,18 +9,11 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-// import Exam1 from './components/Exam1.vue'
-// import User from './components/User.vue'
-// import SignUpAccount from './components/signUpAccount.vue'
+
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld,
-    // Exam1,
-    //  User
-    // SignUpAccount
   }
 }
 </script>
