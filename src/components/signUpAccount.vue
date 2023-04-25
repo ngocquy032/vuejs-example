@@ -103,7 +103,7 @@ export default {
       this.repassword = '';
     },
     checkEmptyInput() {
-      if (this.accountInfo.password.trim() === '' || this.accountInfo.userName === '' || this.repassword === '') {
+      if (this.accountInfo.password.trim() === '' || this.accountInfo.userName.trim() === '' || this.repassword.trim() === '') {
         return false;
       } else {
         return true
