@@ -2,7 +2,7 @@ import Vue from 'vue'
 //Dòng này để import vue-router
 import Router from 'vue-router'
 import Signup from '../components/signUpAccount.vue'
-import Login from '../components/Exam1.vue'
+import Login from '../components/Login'
 
 Vue.use(Router)
 
