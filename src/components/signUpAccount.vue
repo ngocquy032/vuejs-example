@@ -3,25 +3,25 @@
     <div class="hello">
       <h1>
         Register</h1>
-        <div class="mg-30">
-          <label for="username"> Tên Tài Khoản</label>
-          <input v-model="accountInfo.userName" type="text">
+      <div class="mg-30">
+        <label for="username"> Tên Tài Khoản</label>
+        <input v-model="accountInfo.userName" type="text">
 
-        </div>
-        <div class="mg-30">
-          <label for="pass">Mật Khẩu</label>
-          <input v-model="accountInfo.password" type="password">
-        </div>
-        <div class="mg-30">
-          <label for="pass"> Nhập Lại Mật Khẩu</label>
-          <input v-model="repassword" type="password">
-          <p style="color: red;" v-if="isShowMessage">{{ message }}</p>
-        </div>
-        <div>
-          <button @click="handleCancelBtn">Hủy Bỏ</button>
-          <button @click="submit">Đăng Ký</button>
+      </div>
+      <div class="mg-30">
+        <label for="pass">Mật Khẩu</label>
+        <input v-model="accountInfo.password" type="password">
+      </div>
+      <div class="mg-30">
+        <label for="pass"> Nhập Lại Mật Khẩu</label>
+        <input v-model="repassword" type="password">
+        <p style="color: red;" v-if="isShowMessage">{{ message }}</p>
+      </div>
+      <div>
+        <button @click="handleCancelBtn">Hủy Bỏ</button>
+        <button @click="submit">Đăng Ký</button>
 
-        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -37,42 +37,79 @@ export default {
       accountInfo: {
         userName: '',
         password: '',
-        
+
       },
       listAccount: [],
       repassword: '',
       message: '',
       isShowMessage: false,
-   
+
     }
   },
   methods: {
+
+    /**
+     * Step 1: Lấy dữ liệu trên localstorage về và lưu vào 1 biến để dùng
+     * Step 2: Check các input đã nhập đủ chưa
+     * Step 3: Sau khi các input đã nhập đủ, check tài khoản đã tồn tại hay chưa
+     * Step 4: Sau khi đã check xong tài khoản không tồn tại, thực hiện check xem đã xác nhận đúng mật khẩu chưa
+     * Step 5: Nếu tất cả các điều kiện đã đúng thì thực hiện push Object (usename, password) vào list data
+     * Step 6: set data lên localstorage
+     * 
+    */
     submit() {
-      
-      if(this.accountInfo.password === this.repassword){
-        this.isShowMessage = false;
-        this.message = '';
-        let listData = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
-        listData.push(this.accountInfo);
+      let listData = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
+      let isCheck = this.checkEmptyInput();
+      // isCheck == true: đã nhập đủ các input
+      // isCheck == false: chưa nhập đủ các input
+      if (isCheck) {
+        // Case đã nhập đủ input
+        let listFilter = listData.filter(item => item.userName === this.accountInfo.userName);
+        // Nếu listFilter có phần tử > 0 => tài khoản vừa nhập đã tồn tại
+        // Nếu listFilter là mảng rỗng => tài khoản chưa tồn tại
+        if (listFilter.length > 0) {
+          // Case tài khoản vừa nhập đã tồn tại
+          alert('Tài khoản đã tồn tại, vui lòng nhập tài khoản khác');
+        } else {
+          // Case: tài khoản chưa tồn tại
+          // Check mật khẩu đã đúng chưa
+          if (this.accountInfo.password === this.repassword) {
+            // Case: đúng
+            this.isShowMessage = false;
+            this.message = '';
+            listData.push(this.accountInfo);
 
-        localStorage.setItem("LIST_ACCOUNT", JSON.stringify(listData));
-        this.accountInfo = {
-          userName: '',
-          password: ''
-        };
-        this.repassword= '';
-          
-        
-        
+            localStorage.setItem("LIST_ACCOUNT", JSON.stringify(listData));
+            this.resetData()
+            alert('Đăng kí tài khoản thành công');
+          } else {
+            // Case: sai
+            this.message = 'mật khẩu không khớp'
+            this.isShowMessage = true;
+          }
+        }
 
-      }else{
-        this.message = 'mật khẩu không khớp'
-        this.isShowMessage = true;
-
+      } else {
+        // Case chưa nhập đủ input
+        alert('Vui lòng nhập đầy đủ các thông tin');
       }
-      
+
     },
-    handleCancelBtn () {
+    resetData() {
+      this.accountInfo = {
+        userName: '',
+        password: ''
+      };
+      this.repassword = '';
+    },
+    checkEmptyInput() {
+      if (this.accountInfo.password.trim() === '' || this.accountInfo.userName === '' || this.repassword === '') {
+        return false;
+      } else {
+        return true
+      }
+    },
+    handleCancelBtn() {
       this.$router.push('/')
     }
   }
@@ -81,29 +118,28 @@ export default {
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
-  
-  .mg-30 {
-      margin: 30px 0px;
-  }
-  
-  label {
-      padding: 10px;
-  }
-  
-  input {
-      border-radius: 2px;
-  }
-  
-  a {
-      padding-right: 60px;
-      text-decoration: none;
-  }
-  
-  button {
-      font-size: 16px;
-      border-radius: 5px;
-      margin: 0px 30px;
-  }
-  </style>
+<style scoped>
+.mg-30 {
+  margin: 30px 0px;
+}
+
+label {
+  padding: 10px;
+}
+
+input {
+  border-radius: 2px;
+}
+
+a {
+  padding-right: 60px;
+  text-decoration: none;
+}
+
+button {
+  font-size: 16px;
+  border-radius: 5px;
+  margin: 0px 30px;
+}
+</style>
   
