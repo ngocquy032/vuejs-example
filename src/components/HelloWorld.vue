@@ -35,6 +35,10 @@
       <button style="border-radius: 5px; background: white;" @click="remove(index, indo)">Remove</button>
       <br />
     </ul> -->
+
+
+
+
     <!-- FROM USER -->
     <h1>Form Submit</h1>
 
@@ -75,10 +79,8 @@
       <li>địa chỉ : {{ item.address }}</li>
 
       <button @click="remove(index, item)">Remove</button>
-    
-    </ul> 
-   
 
+    </ul>
 
   </div>
 </template>
@@ -99,7 +101,9 @@ export default {
       messeage: '',
       indos: [],
        */
-      add:{ 
+
+      // form User
+      add: {
         name: '',
         age: '',
         gender: '',
@@ -107,6 +111,8 @@ export default {
         address: '',
       },
       items: [],
+
+
       // checked: false,
       // dataList: [],
       // checkedNames: [],
@@ -117,8 +123,8 @@ export default {
     submit() {
       // this.indos.push(this.messeage);
       this.items.push(this.add)
-     
-      this.add = { 
+
+      this.add = {
         name: '',
         age: '',
         gender: '',
@@ -130,6 +136,8 @@ export default {
     remove(id) {
       // console.log("item  ", item);
       this.items.splice(id, 1)
+      console.log("item  ", id);
+
     }
   }
 

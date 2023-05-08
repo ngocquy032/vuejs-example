@@ -2,7 +2,7 @@
   <div class="hello">
     <div class="hello">
       <h1>
-        Register</h1>
+      Đăng Ký</h1>
       <div class="mg-30">
         <label for="username"> Tên Tài Khoản</label>
         <input v-model="accountInfo.userName" type="text">
@@ -10,7 +10,7 @@
       </div>
       <div class="mg-30">
         <label for="pass">Mật Khẩu</label>
-        <input v-model="accountInfo.password" type="password">
+        <input v-model="accountInfo.password" type="password" style="margin-left: 35px;">
       </div>
       <div class="mg-30">
         <label for="pass"> Nhập Lại Mật Khẩu</label>
@@ -64,12 +64,18 @@ export default {
       // isCheck == false: chưa nhập đủ các input
       if (isCheck) {
         // Case đã nhập đủ input
+
         let listFilter = listData.filter(item => item.userName === this.accountInfo.userName);
+
         // Nếu listFilter có phần tử > 0 => tài khoản vừa nhập đã tồn tại
         // Nếu listFilter là mảng rỗng => tài khoản chưa tồn tại
+
         if (listFilter.length > 0) {
+
           // Case tài khoản vừa nhập đã tồn tại
-          alert('Tài khoản đã tồn tại, vui lòng nhập tài khoản khác');
+          // alert('Tài khoản đã tồn tại, vui lòng nhập tài khoản khác');
+          this.message = 'Tài khoản đã tồn tại, vui lòng nhập tài khoản khác'
+          this.isShowMessage = true;
         } else {
           // Case: tài khoản chưa tồn tại
           // Check mật khẩu đã đúng chưa
@@ -79,9 +85,11 @@ export default {
             this.message = '';
             listData.push(this.accountInfo);
 
+            // localStorage.setItem("LIST_ACCOUNT", JSON.stringify(listData));
             localStorage.setItem("LIST_ACCOUNT", JSON.stringify(listData));
             this.resetData()
             alert('Đăng kí tài khoản thành công');
+            this.$router.push('/')
           } else {
             // Case: sai
             this.message = 'mật khẩu không khớp'
@@ -91,7 +99,9 @@ export default {
 
       } else {
         // Case chưa nhập đủ input
-        alert('Vui lòng nhập đầy đủ các thông tin');
+        // alert('Vui lòng nhập đầy đủ các thông tin');
+        this.message = 'Vui lòng nhập đầy đủ các thông tin'
+        this.isShowMessage = true;
       }
 
     },
@@ -103,10 +113,10 @@ export default {
       this.repassword = '';
     },
     checkEmptyInput() {
-      if (this.accountInfo.password.trim() === '' || this.accountInfo.userName.trim() === '' || this.repassword.trim() === '') {
+      if (this.accountInfo.password.trim() === '' || this.accountInfo.userName === '' || this.repassword === '') {
         return false;
       } else {
-        return true
+        return true;
       }
     },
     handleCancelBtn() {
@@ -137,9 +147,17 @@ a {
 }
 
 button {
-  font-size: 16px;
+  border: white;
+  font-size: 18px;
+  background: #1877f2;
+  color: aliceblue;
+  padding: 5px 5px;
   border-radius: 5px;
   margin: 0px 30px;
+}
+button:hover {
+    background: #2F58CD;
+    color: antiquewhite;
 }
 </style>
   

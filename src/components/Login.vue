@@ -1,14 +1,16 @@
 <template>
     <div class="hello">
-        <h1>Log In</h1>
-        <form action="login">
+        <h1>Đăng Nhập</h1>
+        <form action="login" @submit.prevent="submit">
             <div class="mg-30">
                 <label for="username">Tài Khoản</label>
-                <input type="text">
+                <input type="text" v-model="userName">
             </div>
             <div class="mg-30">
                 <label for="pass">Mật Khẩu</label>
-                <input type="password">
+                <input type="password" v-model="password">
+                <p style="color: red;" v-if="isMessage">{{ warning }}</p>
+
             </div>
             <div>
 
@@ -23,7 +25,7 @@
 </template>
   
 <script>
-import router from '@/router';
+// import router from '@/router';
 export default {
     name: 'HelloWorld',
     props: {
@@ -33,18 +35,54 @@ export default {
     data() {
         return {
             listAccount: [],
+            userName: '',
+            password: '',
+            warning: '',
+            isMessage: false
         }
     },
     methods: {
-        handleSignup() {
-            router.push('/')
+        submit() {
+            let check = this.checkInput();
+            if (check) {
+
+                let data = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
+                // localStorage.setItem("LIST_ACCOUNT", JSON.stringify(data));
+                console.log(data.userName);
+                const accounts = data.find((acc) => acc.userName === this.userName && acc.password === this.password);
+                if (accounts) {
+                    alert('đăng nhập thành công' + accounts.userName);
+                    this.$router.push(this.userName);
+
+                } else {
+                    this.warning = 'Tên đăng nhập hoặc mật khẩu không đúng';
+                    this.isMessage = true;
+                }
+
+            } else {
+                this.warning = 'Vui lòng nhập đầy đủ các thông tin';
+                this.isMessage = true;
+
+            }
+        },
+        checkInput() {
+            if (this.userName.trim() === '' || this.password.trim() === '') {
+                return false;
+            } else {
+                return true;
+            }
+        },
+        resertData() {
+            this.userName = '',
+                this.password = ''
         }
     },
     mounted() {
-        localStorage.setItem("LIST_ACCOUNT", JSON.stringify([]));
+        // localStorage.setItem("LIST_ACCOUNT", JSON.stringify([]));
         this.listAccount = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
         console.log(this.listAccount);
-    }
+    },
+
 
 
 }
@@ -53,7 +91,7 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .mg-30 {
-    
+
     margin: 30px 0px;
 }
 
@@ -70,26 +108,23 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    color: #FC2947;
+
+}
+
 button {
-    font-size: 16px;
+    font-size: 18px;
+    border: white;
     border-radius: 5px;
+    background: #1877f2;
+    color: aliceblue;
+    padding: 5px 5px;
 }
 
-/* h3 {
-    margin: 40px 0 0;
+button:hover {
+    background: #2F58CD;
+    color: antiquewhite;
 }
-
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    display: inline-block;
-    margin: 0 10px;
-}
-
-a {
-    color: #42b983;
-} */</style>
+</style>
   

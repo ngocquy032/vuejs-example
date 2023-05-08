@@ -1,19 +1,31 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-   <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <!-- <SignUpAccount /> -->
-    <router-view></router-view>
-   <!-- <User/> -->
+    <!-- <HelloWorld/> -->
+
+    <!-- <TodoList></TodoList> -->
+  <!-- <Login/> -->
+  <!-- <signUpAccount></signUpAccount>  -->
+  <router-view></router-view>
+
+  
   </div>
 </template>
 
 <script>
+// import HelloWorld from './components/HelloWorld.vue';
+// import TodoList from '@/view/TodoList.vue';
+
+// import Login from '@/components/Login.vue'
+// import signUpAccount from './components/signUpAccount.vue';
 
 
 export default {
   name: 'App',
   components: {
+    // HelloWorld
+    // TodoList
+    // Login, 
+    // signUpAccount
   }
 }
 </script>
