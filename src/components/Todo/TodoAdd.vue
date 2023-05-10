@@ -6,7 +6,7 @@
                 <button @click="No"  style="margin: 5px 15px;">No</button>
                 <button @click="Yes" style="margin: 5px 15px;">Yes</button>
             </div>       
-        <input type="text" v-model="username" placeholder="Todo Item" />
+        <input v-if="isAdd" type="text" v-model="username" placeholder="Todo Item" />
         
             <button v-if="isAdd" @click="addTodo">Add</button>
         
@@ -35,7 +35,6 @@ export default {
             this.username = '';
         },
         logOut() {
-            //   alert('Vui Lòng Xác Nhận Đăng Xuất !!!');
             this.isLogOut = true;
             this.isAdd = false;
         },

@@ -3,9 +3,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login.vue'
 import Signup from '../components/signUpAccount.vue'
-import TodoList from '@/view/TodoList.vue'
+import Acc1 from '../components/Account/Acc1.vue'
 import Acc2 from '../components/Account/Acc2.vue'
-import Acc3 from '@/components/Account/Acc3.vue'
+
 
 
 Vue.use(Router)
@@ -19,25 +19,21 @@ const router = new Router({
       component: Login // component route sử dụng
     },
     {
-      path: '/signup', ///path của route
-      name: 'Signup', // tên route
-      component: Signup // component route sử dụng
+      path: '/signup', 
+      name: 'Signup', 
+      component: Signup 
     },
     {
       path: '/acc1',
       name: 'Acc1',
-      component: TodoList
+      component: Acc1
     },
     {
       path: '/acc2',
       name: 'Acc2',
       component: Acc2
     },
-    {
-      path: '/acc3',
-      name: 'Acc3',
-      component: Acc3
-    }
+  
  
   ]
 })

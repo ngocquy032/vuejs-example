@@ -35,6 +35,8 @@ export default {
     data() {
         return {
             listAccount: [],
+            listAcc2: [],
+            listAcc1: [],
             userName: '',
             password: '',
             warning: '',
@@ -51,7 +53,7 @@ export default {
                 console.log(data.userName);
                 const accounts = data.find((acc) => acc.userName === this.userName && acc.password === this.password);
                 if (accounts) {
-                    alert('đăng nhập thành công' + accounts.userName);
+                    // alert('đăng nhập thành công' + accounts.userName);
                     this.$router.push(this.userName);
 
                 } else {
@@ -79,6 +81,12 @@ export default {
     },
     mounted() {
         // localStorage.setItem("LIST_ACCOUNT", JSON.stringify([]));
+        // localStorage.setItem("Account2", JSON.stringify([]));
+        // localStorage.setItem("Account1", JSON.stringify([]));
+
+
+        this.listAcc1 = JSON.parse(localStorage.getItem('Account1'));
+        this.listAcc2 = JSON.parse(localStorage.getItem('Account2'));
         this.listAccount = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
         console.log(this.listAccount);
     },
