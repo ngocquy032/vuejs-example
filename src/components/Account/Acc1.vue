@@ -11,9 +11,10 @@
             </div>
         </div>
         <div v-if="isAdd">
+            <button @click="update" style="margin-right: 10px;">Update Password</button>
             <button @click="logOut">Log Out</button>
-            <input style="height: 25px;" type="text" v-model="messeage" placeholder="Please enter's data" />
-            
+            <input style="height: 25px;" type="text" v-model="add.messeage" placeholder="Please enter's data" />
+
             <button @click="submit">Submit</button>
             <p style="color: red;" v-if="isShowMessage">{{ warrning }}</p>
 
@@ -38,7 +39,9 @@ export default {
         return {
             isLogOut: false,
             isAdd: true,
-            messeage: '',
+            add: {
+                messeage: '',
+            },
             indos: [],
             warrning: '',
             isShowMessage: false
@@ -47,55 +50,75 @@ export default {
     methods: {
         submit() {
             let check = this.checkInput();
-            if(check){
+            if (check) {
                 let dataAcc1 = JSON.parse(localStorage.getItem('Account1'))
-            this.indos.push(this.messeage);
-            dataAcc1.push(this.messeage);
-            localStorage.setItem("Account1", JSON.stringify(dataAcc1));
-            this.isShowMessage = false;
-            this.messeage = '';
-            }else{
+                this.indos.push(this.add.messeage);
+                dataAcc1.push(this.add.messeage);
+                localStorage.setItem("Account1", JSON.stringify(dataAcc1));
+                this.add.messeage = '';
+                this.add.id = Date.now();
+                this.isShowMessage = false;
+                // console.log("them", this.Account1);
+                console.log('add', this.indos);
+                console.log('id', this.add.id);
+           
+            } else {
                 this.warrning = 'Vui lòng nhập đủ các thông tin';
-                this.isShowMessage =  true;
+                this.isShowMessage = true;
+            }
 
-            }
-            console.log("them" , this.Account1);
-         
         },
+
         remove(index, item) {
-            this.indos.splice(index, 1)
+            this.indos.splice(index, 1);
             let dataAcc1 = JSON.parse(localStorage.getItem('Account1'))
-            const itemIndex = dataAcc1.indexOf(item);
-            if (itemIndex > -1) {
+            // const itemIndex = dataAcc1.latsIndexOf(item);
+            let itemIndex = dataAcc1.findIndex((element) => {
+                return JSON.stringify(element) === JSON.stringify(item);
+            });
+            console.log("item", itemIndex);
+            if (itemIndex > -1 ) {
                 dataAcc1.splice(itemIndex, 1);
+                localStorage.setItem("Account1", JSON.stringify(dataAcc1));
+
+                console.log('remove', dataAcc1);
+              
             }
-            localStorage.setItem("Account1", JSON.stringify(dataAcc1));
+            // itemIndex = localStorage.setItem("Account1", JSON.stringify(dataAcc1));
         },
-       
+        update(){
+            this.$router.push('/updatePassword');
+
+        },
+
         logOut() {
             this.isLogOut = true;
             this.isAdd = false;
-            this.messeage = ''
+
         },
         No() {
             this.isLogOut = false
             this.isAdd = true;
-            this.messeage = ""
+
 
         },
         Yes() {
             this.$router.push('/')
 
         },
-        checkInput(){
-            if(this.messeage.trim() === ''){
+        checkInput() {
+            if (this.add.messeage.trim() === '') {
                 return false;
-            }else{
+            } else {
                 return true;
             }
         }
 
+    }, 
+    created(){
+        this.indos = JSON.parse(localStorage.getItem('Account1'));
     }
+    
 }
 
 </script>
@@ -134,3 +157,7 @@ button:hover {
     background: #D21312;
 }
 </style>
+
+
+
+

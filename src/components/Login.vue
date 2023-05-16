@@ -84,7 +84,6 @@ export default {
         // localStorage.setItem("Account2", JSON.stringify([]));
         // localStorage.setItem("Account1", JSON.stringify([]));
 
-
         this.listAcc1 = JSON.parse(localStorage.getItem('Account1'));
         this.listAcc2 = JSON.parse(localStorage.getItem('Account2'));
         this.listAccount = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));

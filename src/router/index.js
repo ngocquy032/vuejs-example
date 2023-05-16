@@ -5,6 +5,9 @@ import Login from '../components/Login.vue'
 import Signup from '../components/signUpAccount.vue'
 import Acc1 from '../components/Account/Acc1.vue'
 import Acc2 from '../components/Account/Acc2.vue'
+import UpdateAcc2 from '../components/Account/UpdateAcc2.vue'
+import UpdateAcc1 from '../components/Account/UpdateAcc1.vue'
+import UpdatePassword from '../components/Account/UpdatePassword.vue'
 
 
 
@@ -33,6 +36,21 @@ const router = new Router({
       name: 'Acc2',
       component: Acc2
     },
+    {
+      path: '/updateAcc2',
+      name: 'UpdateAcc2',
+      component: UpdateAcc2
+    }, 
+    {
+      path: '/updateAcc1',
+      name: 'UpdateAcc1',
+      component: UpdateAcc1
+    },
+    {
+      path: '/updatePassword',
+      name: 'UpdatePassword',
+      component: UpdatePassword
+    }
   
  
   ]

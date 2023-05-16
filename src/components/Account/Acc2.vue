@@ -1,17 +1,20 @@
 <template>
     <div>
-        <h1> Account 2</h1>
         <div v-if="isBack">
+            <h1> Account 2</h1>
             <div class="h-50">
-                FullName: <input type="text" v-model="add.name" placeholder="FullName">
+                <label for="name">Full Name</label>
+                <input type="text" v-model="add.name" placeholder="FullName">
             </div>
 
             <div class="h-50">
-                Age: <input type="text" v-model="add.age" placeholder="Age">
+                <label for="age">Age</label>
+                <input type="text" v-model="add.age" placeholder="Age">
             </div>
 
             <div class="h-50">
-                Gender: <select v-model="add.gender">
+                <label for="gender">Gender</label>
+                <select v-model="add.gender">
                     <option disabled value="">Please select one</option>
                     <option>Nam</option>
                     <option>Nữ</option>
@@ -20,19 +23,20 @@
             </div>
 
             <div class="h-50">
-                Phone: <input type="text" v-model="add.phone" placeholder="NumberPhone">
+                <label for="phone">Phone</label>
+                <input type="text" v-model="add.phone" placeholder="NumberPhone">
             </div>
 
             <div class>
-                Address: <textarea v-model="add.address" placeholder="add multiple lines"></textarea>
+                <label for="address">Address</label>
+                <textarea v-model="add.address" placeholder="add multiple lines"></textarea>
             </div>
-
 
         </div>
 
-
         <div>
-            <button @click="logOut" style="margin: 0px 30px;">Log Out</button>
+            <button v-if="isAdd" @click="updateUser" style="margin: 0px 30px;">Update User</button>
+            <button  @click="logOut" style="margin: 0px 30px;">Log Out</button>
             <div v-if="isLogOut">
                 <p>Vui Lòng xác Thực Đăng Xuất!!!</p>
                 <button @click="No" style="margin: 5px 15px;">No</button>
@@ -49,11 +53,14 @@
                 <li>giới tính : {{ indo.gender }}</li>
                 <li>số điện thoại : {{ indo.phone }}</li>
                 <li>địa chỉ : {{ indo.address }}</li>
+                <button @click="remove(index, indo)">Remove</button>
+                <button @click="updateData(index, indo)">Update</button>
 
-                <button @click="remove(index, indo.name)">Remove</button>
+           
 
             </ul>
         </div>
+
     </div>
 </template>
 
@@ -74,11 +81,14 @@ export default {
                 phone: '',
                 address: '',
             },
+            a: true,
+
             indos: [],
             isAdd: true,
             isBack: true,
             warrning: '',
-            isShowMessage: false
+            isShowMessage: false,
+            isUpdate: false
         }
     },
     methods: {
@@ -86,7 +96,7 @@ export default {
             let check = this.checkInput();
             if (check) {
                 let dataAcc2 = JSON.parse(localStorage.getItem('Account2'));
-                this.indos.push(this.add)
+                // this.indos.push(this.add)
                 dataAcc2.push(this.add)
                 localStorage.setItem("Account2", JSON.stringify(dataAcc2));
                 this.add = {
@@ -96,57 +106,48 @@ export default {
                     phone: '',
                     address: '',
                 };
+                this.add.id = Date.now();
                 this.isShowMessage = false;
+                this.dataAcc2 = JSON.parse(localStorage.getItem('Account2'));
+                this.indos = this.dataAcc2;
+                console.log('add', this.dataAcc2);
+                console.log("id", this.add.id)
 
 
             } else {
                 this.warrning = "Vui lòng nhập đầy đủ thông tin"
                 this.isShowMessage = true;
-
             }
-            console.log('add',this.dataAcc2);
-
-            // console.log(this.indos)
-
         },
-
-        // this.indos.splice(index, 1);
-        // let dataAcc2 = JSON.parse(localStorage.getItem('Account2'));
-
-        // const itemIndex = this.indos.filter(indo => indo === item);
-        // if (itemIndex) {
-        //     dataAcc2.splice(itemIndex, 1);
-        //     localStorage.setItem("Account2", JSON.stringify(this.indos));
-        // }
         remove(index, item) {
             this.indos.splice(index, 1);
             const removeaAcc2 = JSON.parse(localStorage.getItem('Account2'));
-            const itemIndex = removeaAcc2.indexOf(item);
+            const itemIndex = removeaAcc2.findIndex((element) => {
+                return JSON.stringify(element) === JSON.stringify(item);
+            });
+            console.log("item", itemIndex);
             if (itemIndex > -1) {
                 removeaAcc2.splice(itemIndex, 1);
                 localStorage.setItem('Account2', JSON.stringify(removeaAcc2));
+                console.log('remove', removeaAcc2);
             }
-                localStorage.setItem('Account2', JSON.stringify(this.indos));
-            
 
-            // localStorage.setItem('Account2', JSON.stringify(dataAcc2));
-            // console.log('xoa', dataAcc2);
         },
-
         logOut() {
             this.isLogOut = true;
             this.isAdd = false;
             this.isBack = false;
+            this.isShowMessage = false;
+           
         },
         No() {
             this.isLogOut = false
             this.isAdd = true;
             this.isBack = true;
+            this.isUpdate = false;
         },
         Yes() {
-
             this.$router.push('/')
-
         },
         checkInput() {
             if (this.add.name === '' || this.add.age === '' || this.add.address === '' || this.add.gender === '' || this.add.phone === '') {
@@ -155,12 +156,22 @@ export default {
             } else {
                 return true;
             }
+        },
+        updateUser(){
+            this.$router.push('/updatePassword')
+        }, updateData(){
+            
         }
 
+    },
+    created() {
+        this.indos = JSON.parse(localStorage.getItem('Account2'));
+        console.log(typeof (this.indos));
     }
 }
 
 </script>
+
 
 <style scoped>
 ul {
@@ -191,6 +202,11 @@ button {
     border-radius: 5px;
     border: wheat;
     padding: 0px 15px;
+    margin: 0px 10px;
+}
+
+label {
+    padding: 10px;
 }
 
 button:hover {
