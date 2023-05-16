@@ -11,7 +11,7 @@
             </div>
         </div>
         <div v-if="isAdd">
-            <button @click="update" style="margin-right: 10px;">Update Password</button>
+            <button @click="updatePassword" style="margin-right: 10px;">Update Password</button>
             <button @click="logOut">Log Out</button>
             <input style="height: 25px;" type="text" v-model="add.messeage" placeholder="Please enter's data" />
 
@@ -22,6 +22,8 @@
             <ul v-for="(indo, index) in indos" :key="index">
                 <li>{{ indo }}</li>
                 <button @click="remove(index, indo)">Remove</button>
+                <button @click="update(index, indo)">Update</button>
+
                 <br />
             </ul>
         </div>
@@ -72,7 +74,6 @@ export default {
         remove(index, item) {
             this.indos.splice(index, 1);
             let dataAcc1 = JSON.parse(localStorage.getItem('Account1'))
-            // const itemIndex = dataAcc1.latsIndexOf(item);
             let itemIndex = dataAcc1.findIndex((element) => {
                 return JSON.stringify(element) === JSON.stringify(item);
             });
@@ -86,7 +87,7 @@ export default {
             }
             // itemIndex = localStorage.setItem("Account1", JSON.stringify(dataAcc1));
         },
-        update(){
+        updatePassword(){
             this.$router.push('/updatePassword');
 
         },
@@ -94,6 +95,7 @@ export default {
         logOut() {
             this.isLogOut = true;
             this.isAdd = false;
+       
 
         },
         No() {
@@ -103,7 +105,9 @@ export default {
 
         },
         Yes() {
+            // localStorage.setItem("LOGGED_IN_USERNAME", JSON.stringify([]));
             this.$router.push('/')
+           
 
         },
         checkInput() {
@@ -112,6 +116,9 @@ export default {
             } else {
                 return true;
             }
+        },
+        update(){
+
         }
 
     }, 
@@ -144,6 +151,7 @@ input {
 
 
 button {
+    margin: 0px 10px;
     color: whitesmoke;
     background: #FF6969;
     height: 35px;

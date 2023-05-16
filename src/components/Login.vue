@@ -1,5 +1,7 @@
 <template>
     <div class="hello">
+        <img src="@/assets/logo.png" alt="">
+
         <h1>Đăng Nhập</h1>
         <form action="login" @submit.prevent="submit">
             <div class="mg-30">
@@ -54,6 +56,9 @@ export default {
                 const accounts = data.find((acc) => acc.userName === this.userName && acc.password === this.password);
                 if (accounts) {
                     // alert('đăng nhập thành công' + accounts.userName);
+                    const loggedInUsername = this.userName; // Thay thế bằng tên người dùng thực tế
+                    localStorage.setItem('LOGGED_IN_USERNAME', loggedInUsername);
+
                     this.$router.push(this.userName);
 
                 } else {

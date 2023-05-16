@@ -38,12 +38,12 @@ export default {
         handleSubmit() {
             let check = this.checkInput();
             const account = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
-            const loggedInUsername = localStorage.getItem('LIST_ACCOUNT', this.userName);
+            const loggedInUsername = localStorage.getItem('LOGGED_IN_USERNAME');
             const loggedInAccount = account.find(acc => acc.userName === loggedInUsername);
 
             if (check) {
                 if (loggedInAccount && loggedInAccount.password === this.oldPassword) {
-                    if (this.newPassword === this.confirmPassword) {
+                    if (this.newPassword === this.repassword) {
                         loggedInAccount.password = this.newPassword;
                         localStorage.setItem('LIST_ACCOUNT', JSON.stringify(account));
                         alert("Thay đổi mật khẩu thành công. Vui lòng đăng nhập lại để tiếp tục");
@@ -62,7 +62,10 @@ export default {
             }
         },
         handleCancelBtn() {
-            this.$router.push('/acc1')
+
+
+            const loggedInUsername = localStorage.getItem('LOGGED_IN_USERNAME');
+            this.$router.push(`${loggedInUsername}`);
 
         },
         checkInput() {
