@@ -27,7 +27,6 @@ export default {
     data() {
         return {
             oldPassword: '',
-
             repassword: '',
             newPassword: '',
             isShowMessage: false,
@@ -42,11 +41,13 @@ export default {
             const loggedInAccount = account.find(acc => acc.userName === loggedInUsername);
 
             if (check) {
-                if (loggedInAccount && loggedInAccount.password === this.oldPassword) {
+                if (loggedInAccount.password === this.oldPassword) {
                     if (this.newPassword === this.repassword) {
                         loggedInAccount.password = this.newPassword;
                         localStorage.setItem('LIST_ACCOUNT', JSON.stringify(account));
                         alert("Thay đổi mật khẩu thành công. Vui lòng đăng nhập lại để tiếp tục");
+                        localStorage.setItem("LOGGED_IN_USERNAME", JSON.stringify([]));
+
                         this.$router.push('/');
                     } else {
                         this.message = 'Mật khẩu mới không khớp. Vui lòng nhập lại.';

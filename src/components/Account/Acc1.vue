@@ -6,7 +6,7 @@
 
             <div v-if="isLogOut">
                 <p>Vui Lòng xác Thực Đăng Xuất!!!</p>
-                <button @click="No" style="margin: 5px 15px;">No</button>
+                <button @click="No" style="margin: 5px 15px;">No</button>  
                 <button @click="Yes" style="margin: 5px 15px;">Yes</button>
             </div>
         </div>
@@ -18,12 +18,11 @@
             <button @click="submit">Submit</button>
             <p style="color: red;" v-if="isShowMessage">{{ warrning }}</p>
 
-            <h3>Submit data</h3>
+            <h3>Thông tin dữ liệu</h3>
             <ul v-for="(indo, index) in indos" :key="index">
                 <li>{{ indo }}</li>
-                <button @click="remove(index, indo)">Remove</button>
-                <button @click="update(index, indo)">Update</button>
-
+                <button @click="remove(index, indo)"><img src="https://cdn-icons-png.flaticon.com/512/3405/3405244.png"    height="20px" alt=""></button>
+                <button @click="updateData(index)"><img src="https://cdn-icons-png.flaticon.com/512/5278/5278663.png" height="20px"  alt=""></button>
                 <br />
             </ul>
         </div>
@@ -63,7 +62,7 @@ export default {
                 // console.log("them", this.Account1);
                 console.log('add', this.indos);
                 console.log('id', this.add.id);
-           
+
             } else {
                 this.warrning = 'Vui lòng nhập đủ các thông tin';
                 this.isShowMessage = true;
@@ -78,25 +77,24 @@ export default {
                 return JSON.stringify(element) === JSON.stringify(item);
             });
             console.log("item", itemIndex);
-            if (itemIndex > -1 ) {
+            if (itemIndex > -1) {
                 dataAcc1.splice(itemIndex, 1);
                 localStorage.setItem("Account1", JSON.stringify(dataAcc1));
 
                 console.log('remove', dataAcc1);
-              
             }
-            // itemIndex = localStorage.setItem("Account1", JSON.stringify(dataAcc1));
         },
-        updatePassword(){
-            this.$router.push('/updatePassword');
+        updateData(index) {
+            this.$router.push({ path: '/updateDataAcc1', query: { index } });
+        },
 
+        updatePassword() {
+            this.$router.push('/updatePassword');
         },
 
         logOut() {
             this.isLogOut = true;
             this.isAdd = false;
-       
-
         },
         No() {
             this.isLogOut = false
@@ -105,10 +103,8 @@ export default {
 
         },
         Yes() {
-            // localStorage.setItem("LOGGED_IN_USERNAME", JSON.stringify([]));
+            localStorage.setItem("LOGGED_IN_USERNAME", JSON.stringify([]));
             this.$router.push('/')
-           
-
         },
         checkInput() {
             if (this.add.messeage.trim() === '') {
@@ -117,15 +113,13 @@ export default {
                 return true;
             }
         },
-        update(){
 
-        }
 
-    }, 
-    created(){
+    },
+    created() {
         this.indos = JSON.parse(localStorage.getItem('Account1'));
     }
-    
+
 }
 
 </script>

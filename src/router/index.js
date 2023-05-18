@@ -5,14 +5,15 @@ import Login from '../components/Login.vue'
 import Signup from '../components/signUpAccount.vue'
 import Acc1 from '../components/Account/Acc1.vue'
 import Acc2 from '../components/Account/Acc2.vue'
-import UpdateAcc2 from '../components/Account/UpdateAcc2.vue'
 import UpdateAcc1 from '../components/Account/UpdateAcc1.vue'
 import UpdatePassword from '../components/Account/UpdatePassword.vue'
+import UpdateDataAcc1 from '../components/Account/UpdateDataAcc1.vue'
+import UpdateDataAcc2 from '../components/Account/UpdateDataAcc2.vue'
+
 
 
 
 Vue.use(Router)
-
 
 const router = new Router({
   routes: [ // bao gồm danh sách route
@@ -36,11 +37,7 @@ const router = new Router({
       name: 'Acc2',
       component: Acc2
     },
-    {
-      path: '/updateAcc2',
-      name: 'UpdateAcc2',
-      component: UpdateAcc2
-    }, 
+    
     {
       path: '/updateAcc1',
       name: 'UpdateAcc1',
@@ -50,9 +47,20 @@ const router = new Router({
       path: '/updatePassword',
       name: 'UpdatePassword',
       component: UpdatePassword
+    },
+    {
+      path: '/updateDataAcc1',
+      name: "UpdateDataAcc1",
+      component: UpdateDataAcc1
+    },
+    {
+      path: '/updateDataAcc2',
+      name: "UpdateDataAcc2",
+      component : UpdateDataAcc2
     }
   
  
   ]
-})
+});
+
 export default router;
