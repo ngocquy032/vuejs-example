@@ -51,8 +51,8 @@ export default {
             if (check) {
 
                 let data = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
+                console.log('data', data);
                 // localStorage.setItem("LIST_ACCOUNT", JSON.stringify(data));
-                console.log(data.userName);
                 const accounts = data.find((acc) => acc.userName === this.userName && acc.password === this.password);
                 if (accounts) {
                     // alert('đăng nhập thành công' + accounts.userName);
@@ -92,7 +92,7 @@ export default {
         this.listAcc1 = JSON.parse(localStorage.getItem('Account1'));
         this.listAcc2 = JSON.parse(localStorage.getItem('Account2'));
         this.listAccount = JSON.parse(localStorage.getItem('LIST_ACCOUNT'));
-        console.log(this.listAccount);
+        console.log('this.listAccount', this.listAccount);
     },
 
 

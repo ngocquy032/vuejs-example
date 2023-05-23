@@ -40,7 +40,7 @@
                 <button @click="No" style="margin: 5px 15px;">No</button>
                 <button @click="Yes" style="margin: 5px 15px;">Yes</button>
             </div>
-            <button v-if="isAdd" @click="updateUser" style="margin: 0px 30px;">Update User</button>
+            <button v-if="isAdd" @click="updateUser" style="margin: 0px 30px;">Update PassWord</button>
             <button v-if="isAdd" @click="logOut" style="margin: 0px 30px;">Log Out</button>
             <button v-if="isAdd" @click="submit">Submit</button>
             <p style="color: red;" v-if="isShowMessage">{{ warrning }}</p>
@@ -167,6 +167,8 @@ export default {
             this.isUpdate = false;
         },
         Yes() {
+            localStorage.setItem("LOGGED_IN_USERNAME", JSON.stringify([]));
+
             this.$router.push('/')
         },
         checkInput() {

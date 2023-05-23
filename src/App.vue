@@ -1,10 +1,7 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld/> -->
 
-    <!-- <TodoList></TodoList> -->
-  <!-- <Login/> -->
-  <!-- <signUpAccount></signUpAccount>  -->
+
   <router-view></router-view>
 
   
@@ -12,20 +9,13 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue';
-// import TodoList from '@/view/TodoList.vue';
 
-// import Login from '@/components/Login.vue'
-// import signUpAccount from './components/signUpAccount.vue';
 
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
-    // TodoList
-    // Login, 
-    // signUpAccount
+
   }
 }
 </script>
